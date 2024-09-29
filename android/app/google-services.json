@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "897838614090",
+    "project_id": "ethosv2",
+    "storage_bucket": "ethosv2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:897838614090:android:806fc2b8826e7df2d448b3",
+        "android_client_info": {
+          "package_name": "com.quid.ethosv2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3JQmRepp0qTDH8dHzOu4o_fz4sh3ZA40"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
