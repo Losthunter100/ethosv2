@@ -17,6 +17,8 @@ App Features:
     Firestore Database Storage.
 
 How to use the application
+
     1.Download the apk from the link. 
+
     2.Install the apk and allow the permissions which are required to run the app.
     
