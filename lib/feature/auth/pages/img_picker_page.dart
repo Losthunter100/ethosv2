@@ -1,9 +1,9 @@
-import 'package:ethosv2/common/extension/custom_theme_extension.dart';
-import 'package:ethosv2/common/widgets/custom_icon_button.dart';
-import 'package:flutter/material.dart';
-import 'package:photo_manager/photo_manager.dart';
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
+import 'package:photo_manager/photo_manager.dart';
+import 'package:ethosv2/common/extension/custom_theme_extension.dart';
+import 'package:ethosv2/common/widgets/custom_icon_button.dart';
 
 class ImagePickerPage extends StatefulWidget {
   const ImagePickerPage({super.key});
@@ -17,18 +17,16 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
   int currentPage = 0;
   int? lastPage;
 
-  handleScrollEvent(ScrollNotification scroll){
-    if(scroll.metrics.pixels / scroll.metrics.maxScrollExtent <= .33) return;
-    if (currentPage == lastPage)  return;
+  handleScrollEvent(ScrollNotification scroll) {
+    if (scroll.metrics.pixels / scroll.metrics.maxScrollExtent <= .33) return;
+    if (currentPage == lastPage) return;
     fetchAllImages();
   }
-  fetchAllImages() async{
+
+  fetchAllImages() async {
     lastPage = currentPage;
-
-
-
     final permission = await PhotoManager.requestPermissionExtend();
-    if(!permission.isAuth)  return PhotoManager.openSetting();
+    if (!permission.isAuth) return PhotoManager.openSetting();
 
     List<AssetPathEntity> albums = await PhotoManager.getAssetPathList(
       type: RequestType.image,
@@ -36,9 +34,10 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
     );
 
     List<AssetEntity> photos = await albums[0].getAssetListPaged(
-    page: currentPage,
-    size: 24,
+      page: currentPage,
+      size: 24,
     );
+
     List<Widget> temp = [];
 
     for (var asset in photos) {
@@ -78,57 +77,54 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
       );
     }
 
+    setState(() {
+      imageList.addAll(temp);
+      currentPage++;
+    });
+  }
 
-  setState(() {
-    imageList.addAll(temp);
-    currentPage++;
-  });
-}
-
-    @override
+  @override
   void initState() {
     fetchAllImages();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        // elevation: 0,
         leading: CustomIconButton(
-          onPressed: () =>Navigator.pop(context),
+          onPressed: () => Navigator.pop(context),
           icon: Icons.arrow_back,
         ),
         title: Text(
-          'EthosApp',
+          'CYLO',
           style: TextStyle(
             color: context.theme.authAppbarTextColor,
-
           ),
         ),
         actions: [
           CustomIconButton(
-            onPressed: (){},
+            onPressed: () {},
             icon: Icons.more_vert,
           ),
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(5),
-
-        child: NotificationListener<ScrollNotification>(
-          onNotification: (ScrollNotification scroll){
-          handleScrollEvent(scroll);
-          return true;
+        padding: const EdgeInsets.all(5.0),
+        child: NotificationListener(
+          onNotification: (ScrollNotification scroll) {
+            handleScrollEvent(scroll);
+            return true;
           },
-
           child: GridView.builder(
             itemCount: imageList.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,),
-            itemBuilder: (_, index){
-            return imageList[index];
+              crossAxisCount: 3,
+            ),
+            itemBuilder: (_, index) {
+              return imageList[index];
             },
           ),
         ),

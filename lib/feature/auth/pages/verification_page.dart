@@ -4,6 +4,7 @@ import 'package:ethosv2/common/extension/custom_theme_extension.dart';
 import 'package:ethosv2/common/widgets/custom_icon_button.dart';
 import 'package:ethosv2/feature/auth/controller/auth_controller.dart';
 import 'package:ethosv2/feature/auth/widgets/custom_text_field.dart';
+import 'package:ethosv2/feature/auth/pages/login_page.dart';
 
 class VerificationPage extends ConsumerWidget {
   const VerificationPage({
@@ -20,7 +21,7 @@ class VerificationPage extends ConsumerWidget {
       WidgetRef ref,
       String smsCode,
       ) {
-    ref.read(authControllerProvider).verifySmsCodex(
+    ref.read(authControllerProvider).verifySmsCode(
       context: context,
       smsCodeId: smsCodeId,
       smsCode: smsCode,
@@ -61,7 +62,7 @@ class VerificationPage extends ConsumerWidget {
                   children: [
                     const TextSpan(
                       text:
-                      "You've tried to register +251935838471. before requesting an SMS or Call with your code.",
+                      "You've tried to register +919431736483. before requesting an SMS or Call with your code.",
                     ),
                     TextSpan(
                       text: "Wrong number?",

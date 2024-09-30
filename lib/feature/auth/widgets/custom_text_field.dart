@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:ethosv2/common/extension/custom_theme_extension.dart';
 import 'package:ethosv2/common/utils/coloors.dart';
-import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField({super.key,
+  const CustomTextField({
+    super.key,
     this.controller,
     this.hintText,
     this.readOnly,
@@ -12,7 +13,11 @@ class CustomTextField extends StatelessWidget {
     this.prefixText,
     this.onTap,
     this.suffixIcon,
-    this.onChanged, this.fontSize, this.autoFocus});
+    this.onChanged,
+    this.fontSize,
+    this.autoFocus,
+  });
+
   final TextEditingController? controller;
   final String? hintText;
   final bool? readOnly;
@@ -32,7 +37,7 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       readOnly: readOnly ?? false,
       textAlign: textAlign ?? TextAlign.center,
-      keyboardType: readOnly == null ? keyboardType : null,
+      keyboardType: keyboardType,
       onChanged: onChanged,
       style: TextStyle(fontSize: fontSize),
       autofocus: autoFocus ?? false,
@@ -43,11 +48,16 @@ class CustomTextField extends StatelessWidget {
         hintText: hintText,
         hintStyle: TextStyle(color: context.theme.greyColor),
         enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Coloors.greenDark),
+          borderSide: BorderSide(
+            color: Coloors.greenDark,
+          ),
         ),
-          focusedBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: Coloors.greenDark, width: 2),
-        )
+        focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Coloors.greenDark,
+            width: 2,
+          ),
+        ),
       ),
     );
   }

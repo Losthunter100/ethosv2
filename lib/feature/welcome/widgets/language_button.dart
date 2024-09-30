@@ -1,122 +1,122 @@
-import 'package:ethosv2/common/extension/custom_theme_extension.dart';
-import 'package:ethosv2/common/utils/coloors.dart';
-import 'package:ethosv2/common/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
+import 'package:ethosv2/common/extension/custom_theme_extension.dart';
+import 'package:ethosv2/common/widgets/custom_icon_button.dart';
+
+import '../../../common/utils/coloors.dart';
 
 class LanguageButton extends StatelessWidget {
-  const LanguageButton({super.key,});
+  const LanguageButton({Key? key}) : super(key: key);
 
-  showBottomSheet(context){
+  showBottomSheet(context) {
     return showModalBottomSheet(
-        context: context,
-        builder: (context){
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  height: 4,
-                  width: 30,
-                  decoration: BoxDecoration(
-                  color: context.theme.greyColor!.withOpacity(0.4),
-                  borderRadius: BorderRadius.circular(5)
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: 4,
+                width: 30,
+                decoration: BoxDecoration(
+                  color: context.theme.greyColor!.withOpacity(.4),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  const SizedBox(width: 20),
+                  CustomIconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: Icons.close,
                   ),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    const SizedBox(width: 20),
-                CustomIconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: Icons.close_outlined,
-                ),
-                    const SizedBox(width: 10),
-                    const Text('App Language', style: TextStyle(
+                  const SizedBox(width: 10),
+                  const Text(
+                    'App Language',
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
-
-
-                    ),
-                    ),
-
-
-                ]
-                ),
-                const SizedBox(width: 10),
-                Divider(
-                  color: context.theme.greyColor!.withOpacity(0.3),
-                  thickness: 0.5,
-                ),
-                RadioListTile(
-                    value: true,
-                    groupValue: true ,
-                    onChanged: (value) {},
-                    activeColor: Coloors.greenDark,
-                    title: const Text('English'),
-                    subtitle: Text(
-                      "(phone's language)",
-                      style: TextStyle(
-                        color: context.theme.greyColor,
-                      ),
-                    ),
-                ),
-                RadioListTile(
-                  value: true,
-                  groupValue: false ,
-                  onChanged: (value) {},
-                  activeColor: Coloors.greenDark,
-                  title: const Text('हिन्दी'),
-                  subtitle: Text(
-                    "(Hindi)",
-                    style: TextStyle(
-                      color: context.theme.greyColor,
                     ),
                   ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Divider(
+                thickness: .5,
+                color: context.theme.greyColor!.withOpacity(.3),
+              ),
+              RadioListTile(
+                value: true,
+                groupValue: true,
+                onChanged: (value) {},
+                activeColor: Coloors.greenDark,
+                title: const Text('English'),
+                subtitle: Text(
+                  "(Phone's language)",
+                  style: TextStyle(
+                    color: context.theme.greyColor,
+                  ),
                 ),
-                ]
-
-            ),
-          );
-        }
+              ),
+              RadioListTile(
+                value: true,
+                groupValue: false,
+                onChanged: (value) {},
+                activeColor: Coloors.greenDark,
+                title: const Text('አማርኛ'),
+                subtitle: Text(
+                  "Amharic",
+                  style: TextStyle(
+                    color: context.theme.greyColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
         );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: context.theme.langBtnBgColor,
+      color: context.theme.langBgColor,
       borderRadius: BorderRadius.circular(20),
       child: InkWell(
         onTap: () => showBottomSheet(context),
         borderRadius: BorderRadius.circular(20),
         splashFactory: NoSplash.splashFactory,
-        highlightColor: context.theme.langBtnHighlightColor,
-        child: const Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 8
+        highlightColor: context.theme.langHightlightColor,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8.0,
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.language,
-                color:  Coloors.greenDark,
+            children: const [
+              Icon(
+                Icons.language,
+                color: Coloors.greenDark,
               ),
               SizedBox(width: 10),
-              Text('English',
+              Text(
+                'English',
                 style: TextStyle(
                   color: Coloors.greenDark,
                 ),
               ),
               SizedBox(width: 10),
-              Icon(Icons.keyboard_arrow_down,
-                  color:  Coloors.greenDark
-              )
+              Icon(
+                Icons.keyboard_arrow_down,
+                color: Coloors.greenDark,
+              ),
             ],
           ),
         ),
-
       ),
     );
   }

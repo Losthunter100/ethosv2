@@ -1,37 +1,56 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ethosv2/common/routes/routes.dart';
 import 'package:ethosv2/common/theme/dark_theme.dart';
 import 'package:ethosv2/common/theme/light_theme.dart';
-import 'package:ethosv2/feature/auth/pages/user_info_page.dart';
-
+import 'package:ethosv2/feature/auth/controller/auth_controller.dart';
+import 'package:ethosv2/feature/home/pages/home_page.dart';
+import 'package:ethosv2/feature/welcome/pages/welcome_page.dart';
 import 'package:ethosv2/firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(
-    options:  DefaultFirebaseOptions.currentPlatform,
+    options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const ProviderScope(child: MyApp(),
-  ),
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Ethos me',
+      title: 'CYLO Me',
       theme: lightTheme(),
       darkTheme: darkTheme(),
-      themeMode: ThemeMode.system,
-
-      home: const UserInfoPage(),
+      home: ref.watch(userInfoAuthProvider).when(
+        data: (user) {
+          FlutterNativeSplash.remove();
+          if (user == null) return const WelcomePage();
+          return const HomePage();
+        },
+        error: (error, trace) {
+          return const Scaffold(
+            body: Center(
+              child: Text('Something wrong happened'),
+            ),
+          );
+        },
+        loading: () => const SizedBox(),
+      ),
       onGenerateRoute: Routes.onGenerateRoute,
     );
   }
+
 }

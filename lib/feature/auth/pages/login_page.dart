@@ -1,13 +1,14 @@
 import 'package:country_picker/country_picker.dart';
-import 'package:ethosv2/common/extension/custom_theme_extension.dart';
-import 'package:ethosv2/common/helper/show_alert_dialog.dart';
-import 'package:ethosv2/common/utils/coloors.dart';
-import 'package:ethosv2/common/widgets/custom_elevated_button.dart';
-import 'package:ethosv2/common/widgets/custom_icon_button.dart';
-import 'package:ethosv2/feature/auth/controller/auth_controller.dart';
-import 'package:ethosv2/feature/auth/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ethosv2/common/extension/custom_theme_extension.dart';
+import 'package:ethosv2/common/helper/show_alert_dialog.dart';
+import 'package:ethosv2/common/widgets/custom_elevated_button.dart';
+import 'package:ethosv2/feature/auth/controller/auth_controller.dart';
+import 'package:ethosv2/feature/auth/widgets/custom_text_field.dart';
+
+import '../../../common/utils/coloors.dart';
+import '../../../common/widgets/custom_icon_button.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -21,70 +22,70 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   late TextEditingController countryCodeController;
   late TextEditingController phoneNumberController;
 
-  sendCodeToPhone(){
-    final phoneNumber= phoneNumberController.text;
+  sendCodeToPhone() {
+    final phoneNumber = phoneNumberController.text;
     final countryName = countryNameController.text;
     final countryCode = countryCodeController.text;
 
-    if(phoneNumber.isEmpty){
+    if (phoneNumber.isEmpty) {
       return showAlertDialog(
         context: context,
-        message: 'Please enter your phone number',
+        message: "Please enter your phone number",
       );
-
-    } else if(phoneNumber.length<9){
+    } else if (phoneNumber.length < 9) {
       return showAlertDialog(
         context: context,
-        message: "The phone number you entered is too short for the country: $countryName.\n\nInclude your area code if you haven't",
+        message:
+        'The phone number you entered is too short for the country: $countryName\n\nInclude your area code if you haven\'t',
       );
-
-    } else if(phoneNumber.length> 10){
+    } else if (phoneNumber.length > 10) {
       return showAlertDialog(
         context: context,
-        message: 'The phone number you entered too long for the country: $countryName',
+        message:
+        "The phone number you entered is too long for the country: $countryName",
       );
     }
-    // request a verification code
+
     ref.read(authControllerProvider).sendSmsCode(
       context: context,
-      phoneNumber: '+$countryCode$phoneNumber',
+      phoneNumber: "+$countryCode$phoneNumber",
     );
   }
-  showCountryCodePicker(){
+
+  showCountryPickerBottomSheet() {
     showCountryPicker(
-        context: context,
-        showPhoneCode: true,
-        favorite: ['IN'],
-        countryListTheme: CountryListThemeData(
-          bottomSheetHeight: 600,
-          backgroundColor:  Theme.of(context).scaffoldBackgroundColor,
-          flagSize: 22,
-          borderRadius: BorderRadius.circular(20),
-          textStyle: TextStyle(color: context.theme.greyColor),
-          inputDecoration: InputDecoration(
-            labelStyle: TextStyle(color: context.theme.greyColor),
-            prefixIcon: const Icon(
-              Icons.language,
-              color: Coloors.greenDark,
-            ),
-            hintText: 'Search country code or name',
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: context.
-                theme.greyColor!.withOpacity(0.2),
-              ),
-            ),
-            focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: Coloors.greenDark,
-              ),
-            ),
+      context: context,
+      showPhoneCode: true,
+      favorite: ['IN'],
+      countryListTheme: CountryListThemeData(
+        bottomSheetHeight: 600,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        flagSize: 22,
+        borderRadius: BorderRadius.circular(20),
+        textStyle: TextStyle(color: context.theme.greyColor),
+        inputDecoration: InputDecoration(
+          labelStyle: TextStyle(color: context.theme.greyColor),
+          prefixIcon: const Icon(
+            Icons.language,
+            color: Coloors.greenDark,
+          ),
+          hintText: 'Search country by code or name',
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: context.theme.greyColor!.withOpacity(.2),
             ),
           ),
-        onSelect: (country) {
-          countryNameController.text= country.name;
-          countryCodeController.text= country.phoneCode;
-        },
+          focusedBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Coloors.greenDark,
+            ),
+          ),
+        ),
+      ),
+      onSelect: (country) {
+        countryNameController.text = country.name;
+        countryCodeController.text = country.phoneCode;
+      },
     );
   }
 
@@ -95,6 +96,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     phoneNumberController = TextEditingController();
     super.initState();
   }
+
   @override
   void dispose() {
     countryNameController.dispose();
@@ -102,19 +104,23 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     phoneNumberController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
-        title: Text('Enter your phone number', style: TextStyle(color: context.theme.authAppbarTextColor,
-        ),
+        title: Text(
+          'Enter your phone number',
+          style: TextStyle(
+            color: context.theme.authAppbarTextColor,
+          ),
         ),
         centerTitle: true,
         actions: [
           CustomIconButton(
-            onPressed: (){},
+            onPressed: () {},
             icon: Icons.more_vert,
           ),
         ],
@@ -124,37 +130,35 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  text: 'Ethos will need to verify your phone number. ',
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text: 'CYLO will need to verify your number. ',
                 style: TextStyle(
                   color: context.theme.greyColor,
                   height: 1.5,
-
                 ),
                 children: [
-                    TextSpan(
+                  TextSpan(
                     text: "What's my number?",
                     style: TextStyle(
                       color: context.theme.blueColor,
-
-                    )
-                ),
-
-
+                    ),
+                  ),
                 ],
-            ),
+              ),
             ),
           ),
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50),
             child: CustomTextField(
-              onTap: showCountryCodePicker,
+              onTap: showCountryPickerBottomSheet,
               controller: countryNameController,
               readOnly: true,
-              suffixIcon: const Icon(Icons.arrow_drop_down,
+              suffixIcon: const Icon(
+                Icons.arrow_drop_down,
                 color: Coloors.greenDark,
+                size: 22,
               ),
             ),
           ),
@@ -163,27 +167,33 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             padding: const EdgeInsets.symmetric(horizontal: 50),
             child: Row(
               children: [
-                SizedBox(width: 70, child: CustomTextField(
-                  onTap: showCountryCodePicker,
-                  controller:  countryCodeController,
-                  prefixText: '+',
-                  readOnly: true,
+                SizedBox(
+                  width: 70,
+                  child: CustomTextField(
+                    onTap: showCountryPickerBottomSheet,
+                    controller: countryCodeController,
+                    prefixText: '+',
+                    readOnly: true,
+                  ),
                 ),
-                ),
-                const SizedBox(height: 10),
-                Expanded(child: CustomTextField(controller: phoneNumberController,
-                hintText: 'phone number',
-                  textAlign: TextAlign.left,
-                  keyboardType: TextInputType.number,
-                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: CustomTextField(
+                    controller: phoneNumberController,
+                    hintText: 'phone number',
+                    textAlign: TextAlign.left,
+                    keyboardType: TextInputType.number,
+                  ),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 20),
-          Text('Carrier Charges may apply',
-              style: TextStyle(color: context.theme.greyColor
-              ),
+          Text(
+            'Carrier charges may apply',
+            style: TextStyle(
+              color: context.theme.greyColor,
+            ),
           ),
         ],
       ),
@@ -193,7 +203,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         text: 'NEXT',
         buttonWidth: 90,
       ),
-
     );
   }
 }
