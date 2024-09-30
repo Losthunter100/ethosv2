@@ -1,8 +1,8 @@
-#CYLO:Connect Your Loved Ones
+CYLO:Connect Your Loved Ones
     
     CYLO is a secured messaging application which is based on flutter and firebase.
 
-#Installation
+Installation
 
     Click on the link
     
@@ -10,7 +10,7 @@
     
     The apk file will be downloaded. Install it in the mobile device
 
-#App Features:
+App Features:
 
     Real time messaging with users.
 
@@ -28,7 +28,7 @@
     
     Firestore Database Storage.
 
-#How to use the application
+How to use the application
 
     1.Download the apk from the link. 
 
