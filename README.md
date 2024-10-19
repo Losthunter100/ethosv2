@@ -28,6 +28,14 @@ App Features:
     
     Firestore Database Storage.
 
+    Bot Detection
+
+    Root Detection
+
+    Obfuscation
+
+
+
 How to use the application
 
     1.Download the apk from the link. 
