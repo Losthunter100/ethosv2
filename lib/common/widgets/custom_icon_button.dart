@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {
   const CustomIconButton({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.icon,
     this.iconColor,
@@ -10,7 +10,7 @@ class CustomIconButton extends StatelessWidget {
     this.minWidth,
     this.background,
     this.border,
-  }) : super(key: key);
+  });
 
   final VoidCallback onPressed;
   final IconData icon;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ethosv2/common/extension/custom_theme_extension.dart';
 import 'package:ethosv2/common/routes/routes.dart';
 
 import '../../../common/widgets/custom_elevated_button.dart';
@@ -32,7 +31,7 @@ class WelcomePage extends StatelessWidget {
                 ),
                 child: Image.asset(
                   'assets/images/circle.png',
-                  color: context.theme.circleImageColor,
+
                 ),
               ),
             ),

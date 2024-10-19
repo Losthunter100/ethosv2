@@ -131,7 +131,7 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
           width: double.maxFinite,
           margin: const EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
-            color: context.theme.receiverChatCardBg,
+            color: Coloors.chatBox,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Center(

@@ -7,10 +7,10 @@ import '../../../common/utils/coloors.dart';
 
 class ContactCard extends StatelessWidget {
   const ContactCard({
-    Key? key,
+    super.key,
     required this.contactSource,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   final UserModel contactSource;
   final VoidCallback onTap;

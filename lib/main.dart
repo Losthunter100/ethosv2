@@ -11,46 +11,60 @@ import 'package:ethosv2/feature/welcome/pages/welcome_page.dart';
 import 'package:ethosv2/firebase_options.dart';
 
 void main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(
-    const ProviderScope(
-      child: MyApp(),
-    ),
-  );
+  try {
+    // Ensure Flutter is initialized
+    WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+    // Initialize Firebase
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+
+    // Run app
+    runApp(const ProviderScope(child: MyApp()));
+  } catch (e) {
+    print('Initialization error: $e');
+    runApp(const ProviderScope(child: MyApp()));
+  }
 }
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'CYLO Me',
+      title: 'CYLO',
       theme: lightTheme(),
       darkTheme: darkTheme(),
-      home: ref.watch(userInfoAuthProvider).when(
-        data: (user) {
+      home: Builder(
+        builder: (context) {
+          // Remove splash screen once we're ready to show the app
           FlutterNativeSplash.remove();
-          if (user == null) return const WelcomePage();
-          return const HomePage();
-        },
-        error: (error, trace) {
-          return const Scaffold(
-            body: Center(
-              child: Text('Something wrong happened'),
+
+          return ref.watch(userInfoAuthProvider).when(
+            data: (user) {
+              if (user == null) return const WelcomePage();
+              return const HomePage();
+            },
+            error: (error, trace) {
+              return const Scaffold(
+                body: Center(
+                  child: Text('Something went wrong'),
+                ),
+              );
+            },
+            loading: () => const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
             ),
           );
         },
-        loading: () => const SizedBox(),
       ),
       onGenerateRoute: Routes.onGenerateRoute,
     );
   }
-
 }

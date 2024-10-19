@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ethosv2/common/extension/custom_theme_extension.dart';
 
 class PrivacyAndTerms extends StatelessWidget {
-  const PrivacyAndTerms({Key? key}) : super(key: key);
+  const PrivacyAndTerms({super.key});
 
   @override
   Widget build(BuildContext context) {

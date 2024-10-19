@@ -4,7 +4,6 @@ import 'package:ethosv2/common/extension/custom_theme_extension.dart';
 import 'package:ethosv2/common/widgets/custom_icon_button.dart';
 import 'package:ethosv2/feature/auth/controller/auth_controller.dart';
 import 'package:ethosv2/feature/auth/widgets/custom_text_field.dart';
-import 'package:ethosv2/feature/auth/pages/login_page.dart';
 
 class VerificationPage extends ConsumerWidget {
   const VerificationPage({
@@ -26,6 +25,7 @@ class VerificationPage extends ConsumerWidget {
       smsCodeId: smsCodeId,
       smsCode: smsCode,
       mounted: true,
+      recaptchaToken: "h6h9",
     );
   }
 

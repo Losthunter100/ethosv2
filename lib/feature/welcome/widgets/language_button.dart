@@ -5,7 +5,7 @@ import 'package:ethosv2/common/widgets/custom_icon_button.dart';
 import '../../../common/utils/coloors.dart';
 
 class LanguageButton extends StatelessWidget {
-  const LanguageButton({Key? key}) : super(key: key);
+  const LanguageButton({super.key});
 
   showBottomSheet(context) {
     return showModalBottomSheet(
@@ -90,14 +90,14 @@ class LanguageButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         splashFactory: NoSplash.splashFactory,
         highlightColor: context.theme.langHightlightColor,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
+        child: const Padding(
+          padding: EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 8.0,
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               Icon(
                 Icons.language,
                 color: Coloors.greenDark,

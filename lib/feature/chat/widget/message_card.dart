@@ -8,11 +8,11 @@ import 'package:ethosv2/common/models/message_model.dart';
 
 class MessageCard extends StatelessWidget {
   const MessageCard({
-    Key? key,
+    super.key,
     required this.isSender,
     required this.haveNip,
     required this.message,
-  }) : super(key: key);
+  });
 
   final bool isSender;
   final bool haveNip;

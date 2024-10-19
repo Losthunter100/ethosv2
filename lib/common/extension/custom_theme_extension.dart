@@ -45,7 +45,7 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
   });
 
   static const lightMode = CustomThemeExtension(
-    circleImageColor: Color(0xFF25D366),
+    circleImageColor: Colors.transparent,
     greyColor: Coloors.greyLight,
     blueColor: Coloors.blueLight,
     langBgColor: Color(0xFFF7F8FA),
@@ -64,7 +64,7 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
   );
 
   static const darkMode = CustomThemeExtension(
-    circleImageColor: Coloors.greenDark,
+    circleImageColor: Colors.transparent,
     greyColor: Coloors.greyDark,
     blueColor: Coloors.blueDark,
     langBgColor: Color(0xFF182229),

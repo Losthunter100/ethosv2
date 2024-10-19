@@ -1,0 +1,107 @@
+// import 'dart:io';
+//
+// class SecurityCheck {
+//   static Future<bool> isDeviceCompromised() async {
+//     if (Platform.isIOS) {
+//       return _checkIosJailbreak();
+//     } else if (Platform.isAndroid) {
+//       return _checkAndroidRoot();
+//     }
+//     return false;
+//   }
+//
+//   static bool _checkIosJailbreak() {
+//     // Common jailbreak paths on iOS
+//     final jailbreakPaths = [
+//       '/Applications/Cydia.app',
+//       '/Library/MobileSubstrate/MobileSubstrate.dylib',
+//       '/bin/bash',
+//       '/usr/sbin/sshd',
+//       '/etc/apt',
+//       '/private/var/lib/apt/',
+//       '/private/var/lib/cydia',
+//       '/private/var/stash',
+//       '/usr/libexec/sftp-server',
+//       '/usr/libexec/ssh-keysign',
+//       '/var/cache/apt',
+//       '/var/lib/apt',
+//       '/var/lib/cydia',
+//       '/var/log/syslog',
+//       '/var/tmp/cydia.log',
+//       '/bin/sh',
+//       '/etc/ssh/sshd_config',
+//     ];
+//
+//     try {
+//       // Check for the existence of jailbreak-related paths
+//       for (final path in jailbreakPaths) {
+//         if (File(path).existsSync() || Directory(path).existsSync()) {
+//           print('Jailbreak detected: $path exists');
+//           return true;
+//         }
+//       }
+//
+//       // Try to write to a restricted location
+//       const restrictedPath = '/private/jailbreak.txt';
+//       try {
+//         File(restrictedPath).writeAsStringSync('Jailbreak test');
+//         File(restrictedPath).deleteSync();
+//         print('Jailbreak detected: Can write to private directory');
+//         return true;
+//       } catch (e) {
+//         // Expected to fail on non-jailbroken devices
+//       }
+//
+//       return false;
+//     } catch (e) {
+//       print('Error during jailbreak detection: $e');
+//       // If we can't perform the check, assume it's compromised
+//       return true;
+//     }
+//   }
+//
+//   static bool _checkAndroidRoot() {
+//     // Common root-related paths on Android
+//     final rootPaths = [
+//       '/system/app/Superuser.apk',
+//       '/sbin/su',
+//       '/system/bin/su',
+//       '/system/xbin/su',
+//       '/data/local/xbin/su',
+//       '/data/local/bin/su',
+//       '/system/sd/xbin/su',
+//       '/system/bin/failsafe/su',
+//       '/data/local/su',
+//       '/su/bin/su',
+//       '/magisk',
+//       '/data/adb/magisk',
+//     ];
+//
+//     try {
+//       // Check for root-related files and directories
+//       for (final path in rootPaths) {
+//         if (File(path).existsSync() || Directory(path).existsSync()) {
+//           print('Root detected: $path exists');
+//           return true;
+//         }
+//       }
+//
+//       // Check for common root management apps
+//       final rootApps = [
+//         'com.noshufou.android.su',
+//         'com.thirdparty.superuser',
+//         'eu.chainfire.supersu',
+//         'com.topjohnwu.magisk',
+//       ];
+//
+//       // You might want to implement package manager checks here
+//       // Note: This would require platform-specific code or method channels
+//
+//       return false;
+//     } catch (e) {
+//       print('Error during root detection: $e');
+//       // If we can't perform the check, assume it's compromised
+//       return true;
+//     }
+//   }
+// }

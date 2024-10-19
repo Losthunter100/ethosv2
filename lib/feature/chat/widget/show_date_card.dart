@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:ethosv2/common/extension/custom_theme_extension.dart';
 
 class ShowDateCard extends StatelessWidget {
-  const ShowDateCard({Key? key, required this.date}) : super(key: key);
+  const ShowDateCard({super.key, required this.date});
 
   final DateTime date;
 

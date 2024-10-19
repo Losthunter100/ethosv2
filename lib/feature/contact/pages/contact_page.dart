@@ -29,7 +29,7 @@ class ContactPage extends ConsumerWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Select contact',
               style: TextStyle(
                 color: Colors.white,

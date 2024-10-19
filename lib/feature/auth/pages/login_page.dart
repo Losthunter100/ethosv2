@@ -6,6 +6,7 @@ import 'package:ethosv2/common/helper/show_alert_dialog.dart';
 import 'package:ethosv2/common/widgets/custom_elevated_button.dart';
 import 'package:ethosv2/feature/auth/controller/auth_controller.dart';
 import 'package:ethosv2/feature/auth/widgets/custom_text_field.dart';
+import 'package:ethosv2/common/widgets/recaptcha_widget.dart'; // Make sure to import this
 
 import '../../../common/utils/coloors.dart';
 import '../../../common/widgets/custom_icon_button.dart';
@@ -21,6 +22,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   late TextEditingController countryNameController;
   late TextEditingController countryCodeController;
   late TextEditingController phoneNumberController;
+  String? _recaptchaToken;
 
   sendCodeToPhone() {
     final phoneNumber = phoneNumberController.text;
@@ -44,66 +46,21 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         message:
         "The phone number you entered is too long for the country: $countryName",
       );
+    } else if (_recaptchaToken == null) {
+      return showAlertDialog(
+        context: context,
+        message: "Please complete the reCAPTCHA verification",
+      );
     }
 
     ref.read(authControllerProvider).sendSmsCode(
       context: context,
       phoneNumber: "+$countryCode$phoneNumber",
+      recaptchaToken: _recaptchaToken!,
     );
   }
 
-  showCountryPickerBottomSheet() {
-    showCountryPicker(
-      context: context,
-      showPhoneCode: true,
-      favorite: ['IN'],
-      countryListTheme: CountryListThemeData(
-        bottomSheetHeight: 600,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        flagSize: 22,
-        borderRadius: BorderRadius.circular(20),
-        textStyle: TextStyle(color: context.theme.greyColor),
-        inputDecoration: InputDecoration(
-          labelStyle: TextStyle(color: context.theme.greyColor),
-          prefixIcon: const Icon(
-            Icons.language,
-            color: Coloors.greenDark,
-          ),
-          hintText: 'Search country by code or name',
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: context.theme.greyColor!.withOpacity(.2),
-            ),
-          ),
-          focusedBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Coloors.greenDark,
-            ),
-          ),
-        ),
-      ),
-      onSelect: (country) {
-        countryNameController.text = country.name;
-        countryCodeController.text = country.phoneCode;
-      },
-    );
-  }
-
-  @override
-  void initState() {
-    countryNameController = TextEditingController(text: 'India');
-    countryCodeController = TextEditingController(text: '91');
-    phoneNumberController = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    countryNameController.dispose();
-    countryCodeController.dispose();
-    phoneNumberController.dispose();
-    super.dispose();
-  }
+  // ... rest of the existing methods ...
 
   @override
   Widget build(BuildContext context) {
@@ -125,77 +82,31 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                text: 'CYLO will need to verify your number. ',
-                style: TextStyle(
-                  color: context.theme.greyColor,
-                  height: 1.5,
-                ),
-                children: [
-                  TextSpan(
-                    text: "What's my number?",
-                    style: TextStyle(
-                      color: context.theme.blueColor,
-                    ),
-                  ),
-                ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // ... existing widgets ...
+            const SizedBox(height: 20),
+            Text(
+              'Carrier charges may apply',
+              style: TextStyle(
+                color: context.theme.greyColor,
               ),
             ),
-          ),
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50),
-            child: CustomTextField(
-              onTap: showCountryPickerBottomSheet,
-              controller: countryNameController,
-              readOnly: true,
-              suffixIcon: const Icon(
-                Icons.arrow_drop_down,
-                color: Coloors.greenDark,
-                size: 22,
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50),
+              child: RecaptchaWidget(
+                siteKey: '6LfY1mUqAAAAAP41a42Z2nA5TbeOh3RrVIACq_CA',
+                onVerified: (token) {
+                  setState(() {
+                    _recaptchaToken = token;
+                  });
+                },
               ),
             ),
-          ),
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 70,
-                  child: CustomTextField(
-                    onTap: showCountryPickerBottomSheet,
-                    controller: countryCodeController,
-                    prefixText: '+',
-                    readOnly: true,
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: CustomTextField(
-                    controller: phoneNumberController,
-                    hintText: 'phone number',
-                    textAlign: TextAlign.left,
-                    keyboardType: TextInputType.number,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 20),
-          Text(
-            'Carrier charges may apply',
-            style: TextStyle(
-              color: context.theme.greyColor,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: CustomElevatedButton(

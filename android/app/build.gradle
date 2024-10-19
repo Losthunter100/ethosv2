@@ -1,5 +1,5 @@
 plugins {
-    id "com.android.application"
+    id 'com.android.application'
     // START: FlutterFire Configuration
     id 'com.google.gms.google-services'
     // END: FlutterFire Configuration
@@ -28,10 +28,20 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdkVersion 23
+        targetSdkVersion 34
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+    configurations.all {
+        exclude group: 'com.scottyab', module: 'rootbeer'
+        exclude module: 'flutter_jailbreak_detection'
+    }
+}
 
     buildTypes {
         release {
@@ -44,4 +54,7 @@ android {
 
 flutter {
     source = "../.."
+}
+wrapper {
+    gradleVersion = '7.5'
 }

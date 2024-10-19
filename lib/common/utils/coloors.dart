@@ -3,7 +3,7 @@ import 'dart:ui';
 class Coloors {
 
 
-    static const Color greenDark = Color(0xFF1D012A);
+    static const Color greenDark = Color(0xFFA629C2);
     static const Color greenLight = Color(0xFF856BBA);
 
     static const Color blueDark = Color(0xFF58176A);
@@ -16,5 +16,6 @@ class Coloors {
     static const Color backgroundLight = Color(0xFFFFFFFF);
 
     static const Color greyBackground = Color(0xFF202C33);
+    static const Color chatBox = Color(0xFF856BBA);
 
 }
